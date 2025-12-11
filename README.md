@@ -50,14 +50,15 @@ O banco foi modelado seguindo a **3ª Forma Normal (3FN)**:
 
 A arquitetura segue o padrão de separação de responsabilidades:
 
-```text
-projeto_crud/
-│
-├── database.py      # Configuração da conexão (Singleton pattern)
-├── models.py        # Modelos do banco (SQLAlchemy)
-├── schemas.py       # Serialização e Validação (Pydantic)
-├── crud.py          # Regras de negócio e Queries otimizadas
-└── main.py          # Rotas da API e Injeção de Dependências
+text
+
+    projeto_crud/
+    │
+    ├── database.py      # Configuração da conexão (Singleton pattern)
+    ├── models.py        # Modelos do banco (SQLAlchemy)
+    ├── schemas.py       # Serialização e Validação (Pydantic)
+    ├── crud.py          # Regras de negócio e Queries otimizadas
+    └── main.py          # Rotas da API e Injeção de Dependências
 
 🚀 Como Executar
 Pré-requisitos
@@ -66,50 +67,51 @@ Pré-requisitos
 
 Passo a Passo
 
-    Clone o repositório:
-    Bash
+Clone o repositório:
+Bash
 
-git clone [https://github.com/gabiRioRange/seu-repositorio.git](https://github.com/gabiRioRange/seu-repositorio.git)
-cd seu-repositorio
+    git clone [https://github.com/gabiRioRange/Sistema-de-Cadastro-com-Banco-de-Dados-Relacional.git](https://github.com/gabiRioRange/Sistema-de-Cadastro-com-Banco-de-Dados-Relacional.git)
+    
+    cd Sistema-de-Cadastro-com-Banco-de-Dados-Relacional
 
 Instale as dependências:
 Bash
 
-pip install fastapi uvicorn sqlalchemy pydantic email-validator
+    pip install fastapi uvicorn sqlalchemy pydantic email-validator
 
 Execute o servidor:
 Bash
 
     uvicorn main:app --reload
 
-    Acesse a Documentação Interativa: O projeto gera documentação automática (Swagger UI). Acesse em seu navegador:
+Acesse a Documentação Interativa: O projeto gera documentação automática (Swagger UI). Acesse em seu navegador:
 
-        http://127.0.0.1:8000/docs
+    http://127.0.0.1:8000/docs
 
 🧪 Testando a API
 Criar Usuário (POST)
 
-Endpoint: /usuarios/
-JSON
+    Endpoint: /usuarios/
+    JSON
 
-{
-  "nome": "Gabriel Developer",
-  "email": "dev@exemplo.com",
-  "enderecos": [
+    {
+      "nome": "Gabriel Developer",
+      "email": "dev@exemplo.com",
+      "enderecos": [
     {
       "rua": "Av. Tecnologia, 100",
       "cidade": "São Paulo",
       "estado": "SP"
     }
-  ]
-}
+      ]
+    }
 
 Buscar com Filtros (GET)
 
-Endpoint: /usuarios/?nome=Gabriel&limit=5
+    Endpoint: /usuarios/?nome=Gabriel&limit=5
 Ver Logs de Auditoria (GET)
 
-Endpoint: /logs/ (Retorna o histórico de requisições, métodos e datas)
+    Endpoint: /logs/ (Retorna o histórico de requisições, métodos e datas)
+    
 👤 Autor
-
 Gabriel Desenvolvedor Python | Ciência da Computação Focado em Backend, IA e Automação.
