@@ -1,0 +1,16 @@
+# Ignorar banco de dados SQLite (não queremos subir dados reais)
+*.db
+*.sqlite3
+
+# Ignorar arquivos compilados do Python
+__pycache__/
+*.pyc
+
+# Ignorar ambientes virtuais
+.venv/
+venv/
+env/
+
+# Ignorar configurações de IDE
+.vscode/
+.idea/
