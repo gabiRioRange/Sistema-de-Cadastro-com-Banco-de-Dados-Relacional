@@ -31,15 +31,10 @@ def criar_usuario(usuario: schemas.UsuarioCreate, db: Session = Depends(database
     return crud.criar_usuario(db=db, usuario=usuario)
 
 @app.get("/usuarios/", response_model=List[schemas.UsuarioResponse])
-def listar_usuarios(skip: int = 0, limit: int = 10, db: Session = Depends(database.get_db)):
-    usuarios = crud.get_usuarios(db, skip=skip, limit=limit)
-    return usuarios
-
-@app.get("/usuarios/", response_model=List[schemas.UsuarioResponse])
 def listar_usuarios(
-    skip: int = 0, 
-    limit: int = 10, 
-    nome: Optional[str] = None, 
+    skip: int = 0,
+    limit: int = 10,
+    nome: Optional[str] = None,    # <--- Garanta que tem esses filtros
     email: Optional[str] = None,
     db: Session = Depends(database.get_db)
 ):

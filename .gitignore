@@ -1,16 +1,16 @@
-# Ignorar banco de dados SQLite (não queremos subir dados reais)
+# Arquivos de ambiente e senhas (NUNCA SUBIR)
+.env
+.env.local
+
+# Banco de dados local (Não queremos subir o arquivo .db real)
 *.db
 *.sqlite3
 
-# Ignorar arquivos compilados do Python
+# Arquivos temporários do Python (Lixo)
 __pycache__/
 *.pyc
+.pytest_cache/
 
-# Ignorar ambientes virtuais
-.venv/
-venv/
-env/
-
-# Ignorar configurações de IDE
-.vscode/
+# Docker e IDEs
 .idea/
+.vscode/

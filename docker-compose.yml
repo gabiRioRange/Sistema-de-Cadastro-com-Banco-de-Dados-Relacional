@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # O Backend (Sua API FastAPI)
+  app:
+    build: .
+    container_name: backend_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # O Frontend (Interface Streamlit) - NOVO
+  frontend:
+    build: .
+    container_name: frontend_ui
+    ports:
+      - "8501:8501"  # Porta padrão do Streamlit
+    volumes:
+      - .:/app
+    environment:
+      - API_URL=http://app:8000 # O frontend "conversa" com o container 'app'
+    command: streamlit run frontend.py
+    depends_on:
+      - app # Só inicia o frontend depois que a API subir

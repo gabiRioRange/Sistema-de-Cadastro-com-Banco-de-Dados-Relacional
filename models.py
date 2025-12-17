@@ -6,6 +6,8 @@ from database import Base
 class Usuario(Base):
     __tablename__ = "usuarios"
 
+    senha_hash = Column(String)
+    bio = Column(String, nullable=True)
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String, index=True)
     email = Column(String, unique=True, index=True)
