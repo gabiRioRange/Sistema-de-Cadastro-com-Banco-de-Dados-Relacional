@@ -1,107 +1,115 @@
-# 🚀 Sistema de Cadastro Inteligente (Full Stack AI)
+# 🚀 Sistema de Cadastro Profissional (API RESTful)
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688)
-![Streamlit](https://img.shields.io/badge/Streamlit-Frontend-FF4B4B)
-![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED)
-![Gemini AI](https://img.shields.io/badge/AI-Google%20Gemini-8E75B2)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.95%2B-green)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-red)
+![Status](https://img.shields.io/badge/Status-Concluído-success)
 
 ## 📋 Sobre o Projeto
 
-Este projeto é uma solução **Full Stack** moderna para gerenciamento de usuários. Diferente de um CRUD tradicional, este sistema utiliza **Inteligência Artificial Generativa (Google Gemini 1.5 Flash)** para enriquecer os dados automaticamente: ao cadastrar um usuário, o sistema gera uma "Biografia Profissional" criativa e personalizada em tempo real.
+Este é um backend robusto desenvolvido em **Python** com **FastAPI**, focado em boas práticas de engenharia de software. O objetivo foi criar um sistema de cadastro escalável, seguro e auditável.
 
-O projeto foi desenhado seguindo as melhores práticas de **DevOps**, rodando 100% isolado em containers **Docker** (Backend + Frontend), garantindo portabilidade e escalabilidade.
+Diferente de CRUDS simples, este projeto implementa **Transacionalidade (ACID)**, **Normalização de Banco de Dados (3FN)** e **Logs de Auditoria via Middleware**, simulando um ambiente real de produção.
 
 ---
 
-## 🛠️ Tecnologias & Arquitetura
+## 🛠️ Tecnologias Utilizadas
 
-O sistema é dividido em microsserviços orquestrados via Docker Compose:
-
-### 后端 (Backend API)
-* **Framework:** FastAPI (Alta performance e validação automática).
-* **Banco de Dados:** SQLAlchemy ORM com SQLite (facilmente escalável para PostgreSQL).
-* **Segurança:** Hashing de senhas com **Bcrypt** e gestão de variáveis de ambiente (`.env`).
-* **AI Engine:** Integração com Google Gemini API para geração de conteúdo.
-* **Testes:** Pytest para testes de integração e regras de negócio.
-
-### 前端 (Interface)
-* **Framework:** Streamlit (Python-based UI).
-* **Comunicação:** Consome a API RESTful via HTTP Requests.
-* **Features:** Formulários interativos e atualização em tempo real.
+* **Linguagem:** Python 3
+* **Framework Web:** FastAPI (Alta performance e validação automática)
+* **ORM:** SQLAlchemy (Abstração de banco de dados relacional)
+* **Validação de Dados:** Pydantic & Email-Validator
+* **Banco de Dados:** SQLite (Configurado) / PostgreSQL (Pronto para uso)
+* **Servidor:** Uvicorn (ASGI)
 
 ---
 
 ## ✨ Funcionalidades Principais
 
-1.  **🤖 Geração Automática de Bio via IA:**
-    * O sistema analisa o nome e dados do usuário.
-    * Consulta a API do Google Gemini.
-    * Gera e salva uma descrição criativa no banco de dados.
-    * *Fallback Seguro:* Se a IA falhar, o cadastro continua sem a bio (Resiliência).
+### 1. CRUD Completo e Robusto
+* **Create:** Cadastro de usuários com múltiplos endereços em uma única requisição.
+* **Read:** Listagem com **paginação** (skip/limit) e **filtros dinâmicos** (por nome e e-mail).
+* **Update:** Atualização de dados cadastrais.
+* **Delete:** Remoção segura de registros.
 
-2.  **🐳 Arquitetura Containerizada:**
-    * Basta um comando (`docker-compose up`) para subir todo o ambiente (Banco, API e Interface).
-    * Zero configuração manual de ambiente na máquina host.
+### 2. Segurança e Integridade
+* **Transações Atômicas:** Se o cadastro de um endereço falhar, o usuário não é criado (Rollback automático), evitando dados órfãos.
+* **Validação Rigorosa:** Schemas Pydantic garantem que nenhum dado inválido chegue ao banco.
+* **Auditoria Automática:** Um **Middleware** captura todas as requisições HTTP e salva em uma tabela de `logs_acesso` para auditoria de segurança.
 
-3.  **🛡️ Segurança e Validação:**
-    * Prevenção contra e-mails duplicados.
-    * Validação rigorosa de tipos de dados (Pydantic).
-    * Criptografia de senhas antes da persistência.
-
----
-
-## 🚀 Como Executar o Projeto
-
-### Pré-requisitos
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado.
-* Uma chave de API do Google Gemini (Gratuita no Google AI Studio).
-
-### Passo a Passo
-
-1.  **Clone o repositório:**
-    ```bash
-    git clone [https://github.com/SEU-USUARIO/NOME-DO-REPO.git](https://github.com/SEU-USUARIO/NOME-DO-REPO.git)
-    cd NOME-DO-REPO
-    ```
-
-2.  **Configure as Variáveis de Ambiente:**
-    Crie um arquivo chamado `.env` na raiz do projeto e adicione sua chave:
-    ```ini
-    DATABASE_URL=sqlite:///./sistema_cadastro.db
-    GEMINI_API_KEY=Cole_Sua_Chave_Aqui
-    ```
-
-3.  **Suba a aplicação com Docker:**
-    Este comando constrói as imagens e inicia os servidores:
-    ```bash
-    docker-compose up --build
-    ```
-
-4.  **Acesse a Aplicação:**
-    * 🖥️ **Frontend (Interface):** Acesse `http://localhost:8501`
-    * 📄 **Backend (Documentação Swagger):** Acesse `http://localhost:8000/docs`
+### 3. Arquitetura de Banco de Dados
+O banco foi modelado seguindo a **3ª Forma Normal (3FN)**:
+* Tabela `usuarios`: Dados cadastrais básicos.
+* Tabela `enderecos`: Relacionamento **1:N** (Um usuário pode ter vários endereços).
+* Tabela `logs_acesso`: Histórico de operações na API.
+* **Índices:** Criados nas colunas de busca frequente (`email`, `nome`) para otimização de performance.
 
 ---
 
-## 🧪 Executando Testes Automatizados
+## 📂 Estrutura do Projeto
 
-Para garantir a integridade do código, rode a suíte de testes dentro do container:
+A arquitetura segue o padrão de separação de responsabilidades:
 
-```bash
-docker-compose exec app pytest
-```
-Isso validará o fluxo de criação, listagem e tratamento de erros.
+```text
+projeto_crud/
+│
+├── database.py      # Configuração da conexão (Singleton pattern)
+├── models.py        # Modelos do banco (SQLAlchemy)
+├── schemas.py       # Serialização e Validação (Pydantic)
+├── crud.py          # Regras de negócio e Queries otimizadas
+└── main.py          # Rotas da API e Injeção de Dependências
 
-## 📸 Demonstração
-Fluxo de Cadastro com IA
+🚀 Como Executar
+Pré-requisitos
 
-    Usuário preenche o formulário no Frontend.
+    Python 3 instalado.
 
-    Backend processa, cria o hash da senha e chama o Google Gemini.
+Passo a Passo
 
-    Usuário aparece na lista com a Bio gerada automaticamente.
+    Clone o repositório:
+    Bash
 
-## 👤 Autor
+git clone [https://github.com/gabiRioRange/seu-repositorio.git](https://github.com/gabiRioRange/seu-repositorio.git)
+cd seu-repositorio
 
-Gabriel Desenvolvedor Full Stack Python
+Instale as dependências:
+Bash
+
+pip install fastapi uvicorn sqlalchemy pydantic email-validator
+
+Execute o servidor:
+Bash
+
+    uvicorn main:app --reload
+
+    Acesse a Documentação Interativa: O projeto gera documentação automática (Swagger UI). Acesse em seu navegador:
+
+        http://127.0.0.1:8000/docs
+
+🧪 Testando a API
+Criar Usuário (POST)
+
+Endpoint: /usuarios/
+JSON
+
+{
+  "nome": "Gabriel Developer",
+  "email": "dev@exemplo.com",
+  "enderecos": [
+    {
+      "rua": "Av. Tecnologia, 100",
+      "cidade": "São Paulo",
+      "estado": "SP"
+    }
+  ]
+}
+
+Buscar com Filtros (GET)
+
+Endpoint: /usuarios/?nome=Gabriel&limit=5
+Ver Logs de Auditoria (GET)
+
+Endpoint: /logs/ (Retorna o histórico de requisições, métodos e datas)
+👤 Autor
+
+Gabriel Desenvolvedor Python | Ciência da Computação Focado em Backend, IA e Automação.
