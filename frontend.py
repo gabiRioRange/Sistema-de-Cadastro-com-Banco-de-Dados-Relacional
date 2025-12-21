@@ -1,12 +1,13 @@
 import streamlit as st
 import requests
+import os
 
 # Configuração da Página
 st.set_page_config(page_title="Sistema de Cadastro AI", layout="wide")
 
 # URL da API (Como vamos rodar via Docker, usamos o nome do container 'app')
 # Se fosse rodar localmente sem docker, seria 'http://127.0.0.1:8000'
-API_URL = "http://app:8000"
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
 st.title("🤖 Sistema de Cadastro Inteligente")
 st.markdown("---")
