@@ -94,6 +94,9 @@ docker-compose exec app pytest
 Isso validará o fluxo de criação, listagem e tratamento de erros.
 
 ## 📸 Demonstração
+
+![foto](Captura_de_tela.png)
+
 Fluxo de Cadastro com IA
 
     Usuário preenche o formulário no Frontend.
